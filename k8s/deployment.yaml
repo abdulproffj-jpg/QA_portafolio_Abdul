@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qa-portfolio
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: qa-portfolio
+  template:
+    metadata:
+      labels:
+        app: qa-portfolio
+    spec:
+      containers:
+      - name: qa-portfolio
+        image: qa-portfolio:local
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 3000

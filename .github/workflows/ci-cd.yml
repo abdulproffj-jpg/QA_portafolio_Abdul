@@ -1,0 +1,28 @@
+name: Local CI/CD Pipeline
+
+on:
+  push:
+    branches: [ master ]
+
+jobs:
+  build-deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+
+      - name: Install dependencies
+        run: |
+          if [ -f package.json ]; then npm install; fi
+
+      - name: Run tests
+        run: |
+          if [ -f package.json ]; then npm test; fi
+
+      - name: Build Docker image
+        run: docker build -t qa-portfolio:local .
